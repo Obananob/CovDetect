@@ -17,9 +17,9 @@ def load_model():
 
 interpreter, input_details, output_details = load_model()
 
-# --- Predict Function ---
+# Predict Function 
 def predict_tflite(image):
-    image = image.resize((224, 224))  # adjust as per model input
+    image = image.resize((180, 180))
     img_array = np.array(image) / 255.0
     img_array = np.expand_dims(img_array.astype(np.float32), axis=0)
     
@@ -31,17 +31,17 @@ def predict_tflite(image):
     confidence = float(np.max(output))
     return predicted_class, confidence
 
-# --- UI: Title & Intro ---
-st.title("🌿 AgroScan: Smart Plant Disease Diagnosis")
-st.write("Upload a plant leaf image and fill patient info to predict disease and generate downloadable result.")
+# UI: Title & Intro 
+st.title("CovDetect: Smart Disease Diagnosis")
+st.write("Upload a an Xray image and fill patient info to predict disease and generate downloadable result.")
 
-# --- User Inputs ---
+#  User Inputs 
 name = st.text_input("👤 Patient Name")
 age = st.number_input("📅 Age", min_value=1, max_value=120)
 location = st.text_input("📍 Location")
-image = st.file_uploader("🖼️ Upload Plant Leaf Image", type=['jpg', 'png', 'jpeg'])
+image = st.file_uploader("🖼️ Upload Xray Image", type=['jpg', 'png', 'jpeg'])
 
-# --- Predict Button ---
+# Predict Button 
 if st.button("🔍 Diagnose"):
     if not all([name, age, location, image]):
         st.warning("Please fill in all fields and upload an image.")
@@ -55,7 +55,7 @@ if st.button("🔍 Diagnose"):
 
         st.success(f"🩺 Diagnosis: **{diagnosis}** (Confidence: {confidence:.2%})")
 
-        # --- Save to results.csv ---
+        # Save to results.csv 
         result = {
             "Name": name,
             "Age": age,
@@ -74,7 +74,7 @@ if st.button("🔍 Diagnose"):
         df.to_csv("results.csv", index=False)
         st.download_button("📥 Download Results CSV", data=df.to_csv(index=False), file_name="results.csv", mime='text/csv')
 
-# --- Show Results Table (optional) ---
+# --- Show Results Table
 if os.path.exists("results.csv"):
     with st.expander("📊 View Previous Results"):
         st.dataframe(pd.read_csv("results.csv"))
