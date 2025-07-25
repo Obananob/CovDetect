@@ -19,6 +19,8 @@ interpreter, input_details, output_details = load_model()
 
 # Predict Function 
 def predict_tflite(image):
+    image = image.convert('RGB') 
+    image = image.resize((180, 180))
     image = image.resize((180, 180))
     img_array = np.array(image) / 255.0
     img_array = np.expand_dims(img_array.astype(np.float32), axis=0)
@@ -60,7 +62,7 @@ if st.button("🔍 Diagnose"):
             "Name": name,
             "Age": age,
             "Location": location,
-            "Date": datetime.datetime.now().strftime("%Y-%m-%d %H:%M"),
+            "Date": datetime.datetime.now().strftime("%d-%m-%Y %I:%M %p"),
             "Diagnosis": diagnosis,
             "Confidence": f"{confidence:.2%}"
         }
