@@ -30,8 +30,7 @@ def predict_tflite(image):
     output = interpreter.get_tensor(output_details[0]['index'])
     
     predicted_class = np.argmax(output)
-    confidence = float(np.max(output))
-    return predicted_class, confidence
+    return predicted_class
 
 # UI: Title & Intro 
 st.title("CovDetect: Smart Disease Diagnosis")
@@ -63,8 +62,7 @@ if st.button("🔍 Diagnose"):
             "Age": age,
             "Location": location,
             "Date": datetime.datetime.now().strftime("%d-%m-%Y %I:%M %p"),
-            "Diagnosis": diagnosis,
-            "Confidence": f"{confidence:.2%}"
+            "Diagnosis": diagnosis
         }
 
         if os.path.exists("results.csv"):
