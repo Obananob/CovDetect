@@ -48,13 +48,13 @@ if st.button("🔍 Diagnose"):
         st.warning("Please fill in all fields and upload an image.")
     else:
         img = Image.open(image)
-        predicted_class, confidence = predict_tflite(img)
+        predicted_class= predict_tflite(img)
 
         # Example class names (replace with your actual classes)
-        class_names = ['Healthy', 'Leaf Spot', 'Rust', 'Blight']
+        class_names = ['Healthy', 'Covid']
         diagnosis = class_names[predicted_class]
 
-        st.success(f"🩺 Diagnosis: **{diagnosis}** (Confidence: {confidence:.2%})")
+        st.success(f"🩺 Diagnosis: **{diagnosis}** ")
 
         # Save to results.csv 
         result = {
