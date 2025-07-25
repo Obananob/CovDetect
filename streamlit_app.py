@@ -9,7 +9,7 @@ import os
 # --- Load TFLite Model ---
 @st.cache_resource
 def load_model():
-    interpreter = tf.lite.Interpreter(model_path="model.tflite")
+    interpreter = tf.lite.Interpreter(model_path="covdetect_model_float16.tflite")
     interpreter.allocate_tensors()
     input_details = interpreter.get_input_details()
     output_details = interpreter.get_output_details()
